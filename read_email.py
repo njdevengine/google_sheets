@@ -34,6 +34,7 @@ companies = []
 emails = []
 phones = []
 sources = []
+dates = []
 
 for m in range(len(messages)):
     begin = messages[m].Body.find("Name:")
@@ -70,5 +71,10 @@ for m in range(len(messages)):
     source = messages[m].Body[(begin+length):end].strip()
     if len(source) <=100:
         sources.append(source)
-        
+for i in messages:
+    try:
+        date = i.SentOn.strftime("%m/%d/%Y")
+        dates.append(date)
+    except: pass
+    
 df2 = pd.DataFrame({"Name":names,"Company":companies,"Email":emails,"Phone":phones,"Source":sources})
